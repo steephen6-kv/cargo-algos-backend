@@ -20,10 +20,10 @@ class EmployeeController extends AbstractController {
   }
 
   protected initializeRoutes = (): void => {
-    this.router.post(
-      `${this.path}`,
-      this.asyncRouteHandler(this.createEmployee)
-    );
+    // this.router.post(
+    //   `${this.path}`,
+    //   this.asyncRouteHandler(this.createEmployee)
+    // );
 
     this.router.get(
       `${this.path}`,
@@ -42,23 +42,23 @@ class EmployeeController extends AbstractController {
    *
    * @returns User record
    */
-  private createEmployee = async (
-    request: RequestWithUser,
-    response: Response,
-    next: NextFunction
-  ) => {
-    const employeeData: EmployeeDto = request.body;
-    const employeeDetail = await this.employeeService.createEmployee(
-      employeeData
-    );
-    response.send(
-      this.fmt.formatResponse(
-        employeeDetail,
-        Date.now() - request.startTime,
-        "OK"
-      )
-    );
-  }
+  // private createEmployee = async (
+  //   request: RequestWithUser,
+  //   response: Response,
+  //   next: NextFunction
+  // ) => {
+  //   const employeeData: EmployeeDto = request.body;
+  //   const employeeDetail = await this.employeeService.createEmployee(
+  //     employeeData
+  //   );
+  //   response.send(
+  //     this.fmt.formatResponse(
+  //       employeeDetail,
+  //       Date.now() - request.startTime,
+  //       "OK"
+  //     )
+  //   );
+  // }
 
   private getAllEmployees = async (
     request: RequestWithUser,
