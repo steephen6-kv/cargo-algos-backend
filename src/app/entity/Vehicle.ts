@@ -11,6 +11,9 @@ export class Vehicle {
   public type: string;
 
   @Column({ nullable: true })
+  public brand: string;
+
+  @Column({ nullable: true })
   public avatar: string;
 
   @Column({ nullable: true })

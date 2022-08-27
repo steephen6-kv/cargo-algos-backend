@@ -17,6 +17,12 @@ export class Ride {
   @Column({ type: "timestamp", nullable: false })
   public tripStartDate?: Date;
 
+  @Column({ type: "timestamp", nullable: false })
+  public driverAvailableStartTime?: Date;
+
+  @Column({ type: "timestamp", nullable: false })
+  public driverAvailableEndTime?: Date;
+
   @ManyToOne(() => User, (user) => user.rides)
   public user: User;
 
