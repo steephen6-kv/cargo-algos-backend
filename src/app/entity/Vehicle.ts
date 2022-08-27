@@ -1,5 +1,15 @@
-import {Column, CreateDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from "typeorm";
 import { Ride } from "./Ride";
+import { User } from "./user";
 
 @Entity()
 export class Vehicle {
@@ -27,6 +37,10 @@ export class Vehicle {
 
   @OneToMany(() => Ride, (ride) => ride.vehicle)
   public rides?: Ride[];
+
+  @ManyToMany(() => User)
+  @JoinTable({name: "user_vehicle"})
+  public users?: User[];
 
   @Column({nullable: true, type: "boolean", default: false})
   public isDeleted: boolean;

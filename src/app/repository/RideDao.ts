@@ -1,8 +1,17 @@
-import { getManager } from "typeorm";
+import { getManager, getRepository, Repository } from "typeorm";
 import { Ride } from "../entity/Ride";
 import { getAllRides } from "../query/ride";
 
 export class RideDao {
+
+    public createRide = async (
+        vehicleData: Partial<Ride>
+    ): Promise<Ride> => {
+        const rideRepo: Repository<Ride> = getRepository(Ride);
+        const rideDetail: Ride = await rideRepo.save(vehicleData);
+        return rideDetail;
+    }
+
     public getAllRides = async (searchParams: any): Promise<any> => {
         searchParams.limit = searchParams?.limit || 1000;
         searchParams.offset = searchParams?.offset || 0;

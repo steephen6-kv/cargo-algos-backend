@@ -26,4 +26,10 @@ export class VehicleDao {
         return Array.isArray(resp) && resp.length > 0 ? resp : [];
     }
 
+    public getById = async (vehicleId: string): Promise<Vehicle> => {
+        const vehicleRepo: Repository<Vehicle> = getManager().getRepository(Vehicle);
+        const vehicleData = await vehicleRepo.findOne(vehicleId);
+        return vehicleData;
+    }
+
 }
