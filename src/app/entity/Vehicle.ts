@@ -11,6 +11,9 @@ export class Vehicle {
   public type: string;
 
   @Column({ nullable: true })
+  public avatar: string;
+
+  @Column({ nullable: true })
   public registrationNumber: string;
 
   @CreateDateColumn({ type: "timestamp" })
@@ -21,9 +24,6 @@ export class Vehicle {
 
   @OneToMany(() => Ride, (ride) => ride.vehicle)
   public rides?: Ride[];
-
-  @Column({nullable: true, type: "boolean", default: false})
-  public isDriver: boolean;
 
   @Column({nullable: true, type: "boolean", default: false})
   public isDeleted: boolean;

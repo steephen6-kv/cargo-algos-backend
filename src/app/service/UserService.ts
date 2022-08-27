@@ -9,7 +9,7 @@ import SearchResult from "../util/rest/searchresult";
 
 export class UserService {
   constructor(
-    private UserDao: UserDao,
+    private userDao: UserDao,
   ) {}
 
   // public createEmployee = async (
@@ -27,7 +27,7 @@ export class UserService {
   public registerUser = async (
     userRegistrationData: RegisterUserDto
   ): Promise<any> => {
-    const user = await this.UserDao.getByPhoneNumber(userRegistrationData.phoneNumber);
+    const user = await this.userDao.getByPhoneNumber(userRegistrationData.phoneNumber);
 
     if (user) {
       if (user.status === 'verified') {
@@ -38,7 +38,7 @@ export class UserService {
       return user;
     }
     // employeeData.password = await bcrypt.hash(employeeData.password, 10); // Do later
-    const registeredUserData: User = await this.UserDao.register(userRegistrationData);
+    const registeredUserData: User = await this.userDao.register(userRegistrationData);
     await this.sendOtpForRegistration();
     return registeredUserData;
   }
@@ -56,7 +56,7 @@ export class UserService {
   }
 
   public getById = async (userId: string): Promise<User> => {
-    const userData = await this.UserDao.getById(userId);
+    const userData = await this.userDao.getById(userId);
     if (!userData) {
       const error = ErrorCodes.USER_NOT_FOUND;
       throw new EntityNotFoundException(error);
@@ -65,7 +65,7 @@ export class UserService {
   }
 
   public getUserByPhoneNumber = async (phoneNumber: string): Promise<User> => {
-    const userData = await this.UserDao.getByPhoneNumber(phoneNumber);
+    const userData = await this.userDao.getByPhoneNumber(phoneNumber);
     if (!userData) {
       const error = ErrorCodes.USER_NOT_FOUND;
       throw new EntityNotFoundException(error);
