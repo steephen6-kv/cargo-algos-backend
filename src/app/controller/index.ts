@@ -8,13 +8,19 @@ import { UserDao } from "../repository/UserDao";
 import VehicleController from "./vehicleController";
 import { VehicleService } from "../service/VehicleService";
 import { VehicleDao } from "../repository/VehicleDao";
+import { RideDao } from "../repository/RideDao";
+import { RideService } from "../service/RideService";
+import RideController from "./RideController";
 
 const userDao = new UserDao();
 const vehicleDao = new VehicleDao();
-const employeeService = new UserService(userDao);
 const vehicleService = new VehicleService(vehicleDao);
+const userService = new UserService(userDao);
+const rideDao = new RideDao();
+const rideService = new RideService(rideDao);
 
 export default [
-  new UserController(employeeService),
-  new VehicleController(vehicleService)
+  new VehicleController(vehicleService),
+  new UserController(userService),
+  new RideController(rideService)
 ];
