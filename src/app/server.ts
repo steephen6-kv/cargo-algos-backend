@@ -1,5 +1,4 @@
 import "./config"; // initiate dot env configs, etc.
-
 import { createConnection } from "typeorm";
 import App from "./app";
 import rdbmsConfig from "./config/rdbms"; // config file for typeorm
@@ -16,7 +15,7 @@ process.on("unhandledRejection", (e) => {
 });
 (async () => {
   try {
-    // await createConnection(rdbmsConfig);
+    await createConnection(rdbmsConfig);
   } catch (error) {
     process.exit(1);
   }
