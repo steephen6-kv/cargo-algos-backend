@@ -3,6 +3,8 @@ import { RegisterUserDto } from "../dto/RegisterUserDto";
 import { User } from "../entity/user";
 import EntityNotFoundException from "../exception/EntityNotFoundException";
 import UserAlreadyRegisteredException from "../exception/UserAlreadyRegisteredException";
+import UserNotAuthorizedException from "../exception/UserNotAuthorizedException";
+import UserNotVerifiedException from "../exception/UserNotVerifiedException";
 import { UserDao } from "../repository/UserDao";
 import { ErrorCodes } from "../util/errorCode";
 import SearchResult from "../util/rest/searchresult";
@@ -72,5 +74,26 @@ export class UserService {
     }
     return userData;
   }
+  
+  // add bcrypt logic
+  private verifyPassword = (inputPassword: string, userPassword: string): boolean => {
+    return inputPassword === userPassword;
+  }
+
+  public login = async (phoneNumber: string, password: string): Promise<boolean> => {
+    const userData = await this.UserDao.getByPhoneNumber(phoneNumber);
+    if (!userData) {
+      const error = ErrorCodes.USER_NOT_FOUND;
+      throw new EntityNotFoundException(error);
+    }
+    if (userData) {
+      if (userData.status !== "verified") {
+        throw new UserNotVerifiedException()
+      }
+      return this.verifyPassword(password, userData.password)
+    }
+    return false;
+  }
+
 
 }

@@ -12,7 +12,7 @@ export class LoginDto {
 
     @IsDefined()
     @IsString()
-    public email: string;
+    public phoneNumber: string;
 
     @IsDefined()
     @IsString()
