@@ -63,7 +63,7 @@ export class UserService {
       const error = ErrorCodes.USER_NOT_FOUND;
       throw new EntityNotFoundException(error);
     }
-    return;
+    return userData;
   }
 
   public getUserByPhoneNumber = async (phoneNumber: string): Promise<User> => {

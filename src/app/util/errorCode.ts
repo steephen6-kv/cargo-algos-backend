@@ -25,7 +25,11 @@ export const ErrorCodes: { [key: string]: CustomError } = {
     USER_NOT_VERIFIED_ERROR: {
         CODE: "USER_NOT_VERIFIED_ERROR",
         MESSAGE: "User not verified",
-    }
+    },
+    RIDER_NOT_FOUND: {
+        CODE: "RIDER_NOT_FOUND",
+        MESSAGE: "Ride not found",
+    },
 };
 
 /**

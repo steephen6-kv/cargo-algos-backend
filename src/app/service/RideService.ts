@@ -1,4 +1,7 @@
+import { Ride } from "../entity/Ride";
+import EntityNotFoundException from "../exception/EntityNotFoundException";
 import { RideDao } from "../repository/RideDao";
+import { ErrorCodes } from "../util/errorCode";
 import SearchResult from "../util/rest/searchresult";
 
 export class RideService {
@@ -12,5 +15,14 @@ export class RideService {
         return {data: resp, length: resp.length, total: resp[0].totalRidesCount };
     }
     return {data: null, length: null, total: null};
+  }
+
+  public getById = async (rideId: string): Promise<Ride> => {
+    const rideData = await this.rideDao.getById(rideId);
+    if (!rideData) {
+      const error = ErrorCodes.RIDE_NOT_FOUND;
+      throw new EntityNotFoundException(error);
+    }
+    return rideData;
   }
 }

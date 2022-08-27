@@ -4,7 +4,7 @@ import { RideService } from "../service/RideService";
 import { AbstractController } from "../util/rest/controller";
 import RequestWithUser from "../util/rest/request";
 import { validate } from "express-validation";
-import { getAllRidesInputSchema } from "../validation/RideSchema";
+import { getAllRidesInputSchema, idParamsSchema } from "../validation/RideSchema";
 /**
  * Implementation of the UserController route.
  *
@@ -22,6 +22,9 @@ class RideController extends AbstractController {
     this.router.get(
       `${this.path}`, validate(getAllRidesInputSchema), this.asyncRouteHandler(this.getAllRides)
     );
+    this.router.get(
+        `${this.path}/:id`, this.asyncRouteHandler(this.getRideById)
+    );
   }
 
   private getAllRides = async (
@@ -33,6 +36,18 @@ class RideController extends AbstractController {
     const { data, total } = await this.rideService.getAllRides(searchParams);
     response.send(
       this.fmt.formatResponse(data, Date.now() - request.startTime, "OK", total)
+    );
+  }
+
+  private getRideById = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    const rideId = request.params.id;
+    const data = await this.rideService.getById(rideId);
+    response.send(
+      this.fmt.formatResponse(data, Date.now() - request.startTime, "OK")
     );
   }
 }

@@ -10,3 +10,9 @@ export const getAllRidesInputSchema = {
         shipmentWeight: Joi.number().required()
     }).unknown(false)
 };
+
+export const idParamsSchema = {
+    params: Joi.object({
+        id: Joi.number().required()
+    }).unknown(false)
+};
