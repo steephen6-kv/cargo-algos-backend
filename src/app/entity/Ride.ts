@@ -1,4 +1,4 @@
-import {Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import { User } from "./user";
 import { Vehicle } from "./Vehicle";
 
@@ -13,6 +13,9 @@ export class Ride {
 
   @Column({ nullable: false })
   public destinationPoint: string;
+
+  @Column({ type: "timestamp", nullable: false })
+  public tripStartDate?: Date;
 
   @ManyToOne(() => User, (user) => user.rides)
   public user: User;
