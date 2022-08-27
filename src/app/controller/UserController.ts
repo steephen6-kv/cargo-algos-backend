@@ -1,6 +1,7 @@
 import { NextFunction, Response } from "express";
 import APP_CONSTANTS from "../constants";
 import { EmployeeDto } from "../dto/EmployeeDto";
+import { RegisterUserDto } from "../dto/RegisterUserDto";
 import authorize from "../middleware/authorize";
 import validationMiddleware from "../middleware/validationMiddleware";
 import { UserService } from "../service/UserService";
@@ -24,6 +25,11 @@ class UserController extends AbstractController {
     //   `${this.path}`,
     //   this.asyncRouteHandler(this.createEmployee)
     // );
+
+    this.router.post(
+      `${this.path}/register`,
+      this.asyncRouteHandler(this.registerUser)
+    );
 
     this.router.get(
       `${this.path}`,
@@ -59,6 +65,24 @@ class UserController extends AbstractController {
   //     )
   //   );
   // }
+
+  private registerUser = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    const employeeData: RegisterUserDto = request.body;
+    const employeeDetail = await this.userService.registerUser(
+      employeeData
+    );
+    response.send(
+      this.fmt.formatResponse(
+        employeeDetail,
+        Date.now() - request.startTime,
+        "OK"
+      )
+    );
+  }
 
   private getAllEmployees = async (
     request: RequestWithUser,

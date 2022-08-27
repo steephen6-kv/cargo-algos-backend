@@ -17,6 +17,10 @@ export const ErrorCodes: { [key: string]: CustomError } = {
     VALIDATION_ERROR: {
         CODE: "VALIDATION_ERROR",
         MESSAGE: "Validation failed error",
+    },
+    USER_ALREADY_REGISTERED_ERROR: {
+        CODE: "USER_ALREADY_REGISTERED_ERROR",
+        MESSAGE: "User already registered error",
     }
 };
 

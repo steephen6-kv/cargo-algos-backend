@@ -12,7 +12,9 @@
     "test": "tsc && NODE_ENV=test nyc --reporter=html --reporter=lcov mocha --timeout 20000 dist/test/  --recursive --exit",
     "debug": "node --nolazy --nolazy --inspect-brk=9229 dist/app/server.js",
     "db:create": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create",
-    "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop"
+    "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop",
+    "rollback": "npm run build && node ./node_modules/typeorm/cli --f ./dist/app/config/rdbms.js migration:revert"
+
   },
   "dependencies": {
     "@types/swagger-jsdoc": "^3.0.2",

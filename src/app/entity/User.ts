@@ -42,4 +42,7 @@ export class User {
   @Column({nullable: true, type: "boolean", default: false})
   public isDeleted: boolean;
 
+  @Column({ nullable: true , default: "verification-pending" })
+  public status?: string;
+
 }
