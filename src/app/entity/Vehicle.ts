@@ -8,7 +8,7 @@ export class Vehicle {
   public id: string;
 
   @Column({ nullable: true })
-  public type: string;
+  public type?: string;
 
   @Column({ nullable: true })
   public avatar: string;
