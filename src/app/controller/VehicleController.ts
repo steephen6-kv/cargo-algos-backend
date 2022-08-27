@@ -3,6 +3,9 @@ import APP_CONSTANTS from "../constants";
 import { VehicleService } from "../service/VehicleService";
 import { AbstractController } from "../util/rest/controller";
 import RequestWithUser from "../util/rest/request";
+import { validate } from "express-validation";
+import { getVehicleTypesInputSchema } from "../validation/VehicleSchema";
+
 /**
  * Implementation of the VehicleController route.
  *
@@ -20,6 +23,9 @@ class VehicleController extends AbstractController {
     this.router.post(
       `${this.path}`,
       this.asyncRouteHandler(this.createVehicle)
+    );
+    this.router.get(
+      `${this.path}/types`, validate(getVehicleTypesInputSchema), this.asyncRouteHandler(this.getVehicleTypes)
     );
 
   }
@@ -44,6 +50,18 @@ class VehicleController extends AbstractController {
         Date.now() - request.startTime,
         "OK"
       )
+    );
+  }
+
+  private getVehicleTypes = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    const searchParams = request.body;
+    const {data, total} = await this.vehicleService.getVehicleTypes(searchParams);
+    response.send(
+      this.fmt.formatResponse(data, Date.now() - request.startTime, "OK", total)
     );
   }
 

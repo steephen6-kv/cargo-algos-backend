@@ -19,6 +19,7 @@ export const getAllRides = (searchParams: any): RawQueryAndParameters => {
         v.id as "vehicleId",
         v.type,
         v.registration_number as "registrationNumber",
+        r.available_capacity as "availableCapacity",
         count(*) over() as "totalRidesCount"
       from
         public.ride r
@@ -34,7 +35,7 @@ export const getAllRides = (searchParams: any): RawQueryAndParameters => {
         and r.start_point = $1
         and r.destination_point = $2
         and r.trip_start_date = $3
-        and r.available_capacity > $4
+        and r.available_capacity >= $4
       order by r.trip_start_date, u.name asc
       limit $5
       offset $6;

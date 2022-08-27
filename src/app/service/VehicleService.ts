@@ -11,8 +11,16 @@ export class VehicleService {
     vehicleData: any
   ): Promise<any> => {
     const vehicleDetail: Vehicle = await this.vehicleDao.createVehicle(vehicleData);
-    // employeeData.password = await bcrypt.hash(employeeData.password, 10);
     return vehicleDetail;
+  }
+
+  public getVehicleTypes = async (searchParams: any): Promise<any> => {
+    const resp: any[] = await this.vehicleDao.getVehicleTypes(searchParams);
+    if (Array.isArray(resp) && resp.length > 0) {
+      const data = resp.map((vehicle) => vehicle.type);
+      return {data, length: data.length, total: data.length};
+    }
+    return {data: null, length: null, total: null};
   }
 
 }
