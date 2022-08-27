@@ -1,6 +1,7 @@
 import { NextFunction, Response } from "express";
 import APP_CONSTANTS from "../constants";
 import { EmployeeDto } from "../dto/EmployeeDto";
+import { LoginDto } from "../dto/LoginDto";
 import { RegisterUserDto } from "../dto/RegisterUserDto";
 import authorize from "../middleware/authorize";
 import validationMiddleware from "../middleware/validationMiddleware";
@@ -36,11 +37,11 @@ class UserController extends AbstractController {
       this.asyncRouteHandler(this.getAllEmployees)
     );
 
-    // this.router.post(
-    //   `${this.path}/login`,
-    //   validationMiddleware(LoginDto, APP_CONSTANTS.body),
-    //   this.asyncRouteHandler(this.login)
-    // );
+    this.router.post(
+      `${this.path}/login`,
+      validationMiddleware(LoginDto, APP_CONSTANTS.body),
+      this.asyncRouteHandler(this.login)
+    );
   }
 
   /**
@@ -96,20 +97,20 @@ class UserController extends AbstractController {
     );
   }
 
-  // private login = async (
-  //   request: RequestWithUser,
-  //   response: Response,
-  //   next: NextFunction
-  // ) => {
-  //   const loginData: LoginDto = request.body;
-  //   const loginDetail = await this.userService.employeeLogin(
-  //     loginData.email.toLowerCase(),
-  //     loginData.password
-  //   );
-  //   response.send(
-  //     this.fmt.formatResponse(loginDetail, Date.now() - request.startTime, "OK")
-  //   );
-  // }
+  private login = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    const loginData: LoginDto = request.body;
+    const loginDetail = await this.userService.login(
+      loginData.phoneNumber,
+      loginData.password
+    );
+    response.send(
+      this.fmt.formatResponse(loginDetail, Date.now() - request.startTime, "OK")
+    );
+  }
 }
 
 export default UserController;

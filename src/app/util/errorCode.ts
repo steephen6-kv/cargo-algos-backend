@@ -20,7 +20,11 @@ export const ErrorCodes: { [key: string]: CustomError } = {
     },
     USER_ALREADY_REGISTERED_ERROR: {
         CODE: "USER_ALREADY_REGISTERED_ERROR",
-        MESSAGE: "User already registered error",
+        MESSAGE: "User already registered",
+    },
+    USER_NOT_VERIFIED_ERROR: {
+        CODE: "USER_NOT_VERIFIED_ERROR",
+        MESSAGE: "User not verified",
     }
 };
 
