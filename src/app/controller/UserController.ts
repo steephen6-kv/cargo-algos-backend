@@ -3,19 +3,19 @@ import APP_CONSTANTS from "../constants";
 import { EmployeeDto } from "../dto/EmployeeDto";
 import authorize from "../middleware/authorize";
 import validationMiddleware from "../middleware/validationMiddleware";
-import { EmployeeService } from "../service/EmployeeService";
+import { UserService } from "../service/UserService";
 import { AbstractController } from "../util/rest/controller";
 import RequestWithUser from "../util/rest/request";
 /**
- * Implementation of the EmployeeController route.
+ * Implementation of the UserController route.
  *
  */
-class EmployeeController extends AbstractController {
-  private employeeService: EmployeeService;
+class UserController extends AbstractController {
+  private userService: UserService;
 
-  constructor(employeeService: EmployeeService) {
-    super(`${APP_CONSTANTS.apiPrefix}/employees`);
-    this.employeeService = employeeService;
+  constructor(userService: UserService) {
+    super(`${APP_CONSTANTS.apiPrefix}/users`);
+    this.userService = userService;
     this.initializeRoutes();
   }
 
@@ -48,7 +48,7 @@ class EmployeeController extends AbstractController {
   //   next: NextFunction
   // ) => {
   //   const employeeData: EmployeeDto = request.body;
-  //   const employeeDetail = await this.employeeService.createEmployee(
+  //   const employeeDetail = await this.userService.createEmployee(
   //     employeeData
   //   );
   //   response.send(
@@ -66,7 +66,7 @@ class EmployeeController extends AbstractController {
     next: NextFunction
   ) => {
     // const urlParams = request.query;
-    const { data, total } = await this.employeeService.getAllEmployees();
+    const { data, total } = await this.userService.getAllEmployees();
     response.send(
       this.fmt.formatResponse(data, Date.now() - request.startTime, "OK", total)
     );
@@ -78,7 +78,7 @@ class EmployeeController extends AbstractController {
   //   next: NextFunction
   // ) => {
   //   const loginData: LoginDto = request.body;
-  //   const loginDetail = await this.employeeService.employeeLogin(
+  //   const loginDetail = await this.userService.employeeLogin(
   //     loginData.email.toLowerCase(),
   //     loginData.password
   //   );
@@ -88,4 +88,4 @@ class EmployeeController extends AbstractController {
   // }
 }
 
-export default EmployeeController;
+export default UserController;

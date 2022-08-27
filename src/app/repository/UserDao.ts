@@ -13,7 +13,7 @@ import { EmployeeDto } from "../dto/EmployeeDto";
 /**
  * Handles CRUD operations
  */
-export class EmployeeDao {
+export class UserDao {
   // public createEmployee = async (
   //   employeeData: EmployeeDto
   // ): Promise<Entity1> => {

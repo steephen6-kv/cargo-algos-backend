@@ -2,13 +2,13 @@
  * Wraps Controllers for easy import from other modules
  */
 
-import EmployeeController from "./EmployeeController";
-import { EmployeeService } from "../service/EmployeeService";
-import { EmployeeDao } from "../repository/EmployeeDao";
+import UserController from "./UserController";
+import { UserService } from "../service/UserService";
+import { UserDao } from "../repository/UserDao";
 
-const employeeDao = new EmployeeDao();
-const employeeService = new EmployeeService(employeeDao);
+const userDao = new UserDao();
+const employeeService = new UserService(userDao);
 
 export default [
-  new EmployeeController(employeeService)
+  new UserController(employeeService)
 ];
