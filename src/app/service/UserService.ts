@@ -32,7 +32,7 @@ export class UserService {
     const user = await this.userDao.getByPhoneNumber(userRegistrationData.phoneNumber);
 
     if (user) {
-      if (user.status === 'verified') {
+      if (user.status === "verified") {
         const error = ErrorCodes.USER_ALREADY_REGISTERED_ERROR;
         throw new UserAlreadyRegisteredException();
       }
@@ -63,7 +63,7 @@ export class UserService {
       const error = ErrorCodes.USER_NOT_FOUND;
       throw new EntityNotFoundException(error);
     }
-    return
+    return;
   }
 
   public getUserByPhoneNumber = async (phoneNumber: string): Promise<User> => {
@@ -74,14 +74,9 @@ export class UserService {
     }
     return userData;
   }
-  
-  // add bcrypt logic
-  private verifyPassword = (inputPassword: string, userPassword: string): boolean => {
-    return inputPassword === userPassword;
-  }
 
   public login = async (phoneNumber: string, password: string): Promise<boolean> => {
-    const userData = await this.UserDao.getByPhoneNumber(phoneNumber);
+    const userData = await this.userDao.getByPhoneNumber(phoneNumber);
     if (!userData) {
       const error = ErrorCodes.USER_NOT_FOUND;
       throw new EntityNotFoundException(error);
@@ -95,5 +90,9 @@ export class UserService {
     return false;
   }
 
+  // add bcrypt logic
+  private verifyPassword = (inputPassword: string, userPassword: string): boolean => {
+    return inputPassword === userPassword;
+  }
 
 }
