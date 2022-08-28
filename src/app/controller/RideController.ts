@@ -36,7 +36,7 @@ class RideController extends AbstractController {
     response: Response,
     next: NextFunction
   ) => {
-    const searchParams = request.body;
+    const searchParams = request.params;
     const { data, total } = await this.rideService.getAllRides(searchParams);
     response.send(
       this.fmt.formatResponse(data, Date.now() - request.startTime, "OK", total)
