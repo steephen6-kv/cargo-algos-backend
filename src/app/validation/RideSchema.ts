@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export const getAllRidesInputSchema = {
-    body: Joi.object().keys({
+    params: Joi.object().keys({
         limit: Joi.number().optional(),
         offset: Joi.number().optional(),
         startPoint: Joi.string().required(),

@@ -14,10 +14,10 @@ import RideController from "./RideController";
 
 const userDao = new UserDao();
 const vehicleDao = new VehicleDao();
-const vehicleService = new VehicleService(vehicleDao);
+const vehicleService = new VehicleService(vehicleDao, userDao);
 const userService = new UserService(userDao);
 const rideDao = new RideDao();
-const rideService = new RideService(rideDao);
+const rideService = new RideService(rideDao, userDao, vehicleDao);
 
 export default [
   new VehicleController(vehicleService),

@@ -22,10 +22,6 @@ class UserController extends AbstractController {
   }
 
   protected initializeRoutes = (): void => {
-    // this.router.post(
-    //   `${this.path}`,
-    //   this.asyncRouteHandler(this.createEmployee)
-    // );
 
     this.router.post(
       `${this.path}/register`,
@@ -42,30 +38,12 @@ class UserController extends AbstractController {
       validationMiddleware(LoginDto, APP_CONSTANTS.body),
       this.asyncRouteHandler(this.login)
     );
-  }
 
-  /**
-   * Create a user with given data.
-   *
-   * @returns User record
-   */
-  // private createEmployee = async (
-  //   request: RequestWithUser,
-  //   response: Response,
-  //   next: NextFunction
-  // ) => {
-  //   const employeeData: EmployeeDto = request.body;
-  //   const employeeDetail = await this.userService.createEmployee(
-  //     employeeData
-  //   );
-  //   response.send(
-  //     this.fmt.formatResponse(
-  //       employeeDetail,
-  //       Date.now() - request.startTime,
-  //       "OK"
-  //     )
-  //   );
-  // }
+    this.router.post(
+      `${this.path}/:id/verify-otp`,
+      this.asyncRouteHandler(this.verifyOtp)
+    );
+  }
 
   private registerUser = async (
     request: RequestWithUser,
@@ -107,6 +85,19 @@ class UserController extends AbstractController {
       loginData.phoneNumber,
       loginData.password
     );
+    response.send(
+      this.fmt.formatResponse(loginDetail, Date.now() - request.startTime, "OK")
+    );
+  }
+
+  private verifyOtp = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    const otp = request.body.otp;
+    const userId = request.params.id;
+    const loginDetail = await this.userService.verifyOtp(otp, userId);
     response.send(
       this.fmt.formatResponse(loginDetail, Date.now() - request.startTime, "OK")
     );

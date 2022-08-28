@@ -1,13 +1,28 @@
 import { Ride } from "../entity/Ride";
 import EntityNotFoundException from "../exception/EntityNotFoundException";
-import { RideDao } from "../repository/RideDao";
 import { ErrorCodes } from "../util/errorCode";
+import { RideDao } from "../repository/RideDao";
+import { UserDao } from "../repository/UserDao";
+import { VehicleDao } from "../repository/VehicleDao";
 import SearchResult from "../util/rest/searchresult";
 
 export class RideService {
   constructor(
     private rideDao: RideDao,
+    private userDao: UserDao,
+    private vehicleDao: VehicleDao
   ) {}
+
+  public createRide = async (
+    rideData: any
+  ): Promise<any> => {
+    const user = await this.userDao.getById(rideData.userId);
+    const vehicle = await this.vehicleDao.getById(rideData.vehicleId);
+    rideData.user = user;
+    rideData.vehicle = vehicle;
+    const rideDetail: Ride = await this.rideDao.createRide(rideData);
+    return rideDetail;
+  }
 
   public getAllRides = async (searchParams: any): Promise<SearchResult> => {
     const resp: any[] = await this.rideDao.getAllRides(searchParams);

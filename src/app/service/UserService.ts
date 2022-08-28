@@ -1,3 +1,4 @@
+import APP_CONSTANTS from "../constants";
 import { EmployeeDto } from "../dto/EmployeeDto";
 import { RegisterUserDto } from "../dto/RegisterUserDto";
 import { User } from "../entity/user";
@@ -13,14 +14,6 @@ export class UserService {
   constructor(
     private userDao: UserDao,
   ) {}
-
-  // public createEmployee = async (
-  //   employeeData: EmployeeDto
-  // ): Promise<any> => {
-  //   const employeeDetail: Entity1 = await this.UserDao.createEmployee(employeeData);
-  //   // employeeData.password = await bcrypt.hash(employeeData.password, 10);
-  //   return employeeDetail;
-  // }
 
   public sendOtpForRegistration = async () => {
     // logic to send OTP
@@ -88,6 +81,13 @@ export class UserService {
       return this.verifyPassword(password, userData.password)
     }
     return false;
+  }
+
+  public verifyOtp = async (otp: number, userId: string): Promise<boolean> => {
+    if (otp === APP_CONSTANTS.otp) {
+      return await this.userDao.updateUserStatus(userId);
+    }
+    return otp === APP_CONSTANTS.otp;
   }
 
   // add bcrypt logic

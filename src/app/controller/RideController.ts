@@ -25,6 +25,10 @@ class RideController extends AbstractController {
     this.router.get(
         `${this.path}/:id`, this.asyncRouteHandler(this.getRideById)
     );
+
+    this.router.post(
+      `${this.path}`, this.asyncRouteHandler(this.createRide)
+    );
   }
 
   private getAllRides = async (
@@ -49,6 +53,24 @@ class RideController extends AbstractController {
     const data = await this.rideService.getById(rideId);
     response.send(
       this.fmt.formatResponse(data, Date.now() - request.startTime, "OK")
+    );
+  }
+
+  private createRide = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    const vehicleData = request.body;
+    const vehicleDetail = await this.rideService.createRide(
+        vehicleData
+    );
+    response.send(
+      this.fmt.formatResponse(
+        vehicleDetail,
+        Date.now() - request.startTime,
+        "OK"
+      )
     );
   }
 }
