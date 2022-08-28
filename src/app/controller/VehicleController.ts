@@ -58,7 +58,7 @@ class VehicleController extends AbstractController {
     response: Response,
     next: NextFunction
   ) => {
-    const searchParams = request.body;
+    const searchParams = request.query;
     const {data, total} = await this.vehicleService.getVehicleTypes(searchParams);
     response.send(
       this.fmt.formatResponse(data, Date.now() - request.startTime, "OK", total)
