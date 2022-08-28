@@ -20,7 +20,7 @@ class RideController extends AbstractController {
 
   protected initializeRoutes = (): void => {
     this.router.get(
-      `${this.path}`, validate(getAllRidesInputSchema), this.asyncRouteHandler(this.getAllRides)
+      `${this.path}`, this.asyncRouteHandler(this.getAllRides)
     );
     this.router.get(
         `${this.path}/:id`, this.asyncRouteHandler(this.getRideById)
@@ -32,7 +32,8 @@ class RideController extends AbstractController {
     response: Response,
     next: NextFunction
   ) => {
-    const searchParams = request.body;
+    const searchParams = request.query;
+    console.log("searchParams: ", searchParams);
     const { data, total } = await this.rideService.getAllRides(searchParams);
     response.send(
       this.fmt.formatResponse(data, Date.now() - request.startTime, "OK", total)
