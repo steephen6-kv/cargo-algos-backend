@@ -1,9 +1,7 @@
 import { NextFunction, Response } from "express";
 import APP_CONSTANTS from "../constants";
-import { EmployeeDto } from "../dto/EmployeeDto";
 import { LoginDto } from "../dto/LoginDto";
 import { RegisterUserDto } from "../dto/RegisterUserDto";
-import authorize from "../middleware/authorize";
 import validationMiddleware from "../middleware/validationMiddleware";
 import { UserService } from "../service/UserService";
 import { AbstractController } from "../util/rest/controller";
@@ -22,23 +20,15 @@ class UserController extends AbstractController {
   }
 
   protected initializeRoutes = (): void => {
-
     this.router.post(
       `${this.path}/register`,
       this.asyncRouteHandler(this.registerUser)
     );
-
-    this.router.get(
-      `${this.path}`,
-      this.asyncRouteHandler(this.getAllEmployees)
-    );
-
     this.router.post(
       `${this.path}/login`,
       validationMiddleware(LoginDto, APP_CONSTANTS.body),
       this.asyncRouteHandler(this.login)
     );
-
     this.router.post(
       `${this.path}/:id/verify-otp`,
       this.asyncRouteHandler(this.verifyOtp)
@@ -60,18 +50,6 @@ class UserController extends AbstractController {
         Date.now() - request.startTime,
         "OK"
       )
-    );
-  }
-
-  private getAllEmployees = async (
-    request: RequestWithUser,
-    response: Response,
-    next: NextFunction
-  ) => {
-    // const urlParams = request.query;
-    const { data, total } = await this.userService.getAllEmployees();
-    response.send(
-      this.fmt.formatResponse(data, Date.now() - request.startTime, "OK", total)
     );
   }
 
