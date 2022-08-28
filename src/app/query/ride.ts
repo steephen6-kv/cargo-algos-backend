@@ -11,8 +11,9 @@ export const getAllRides = (searchParams: any): RawQueryAndParameters => {
     ];
     const query = `
       select
+        r.id as id,
         r.trip_start_date as "tripStartDate",
-        u.id,
+        u.id as "userId",
         u.name,
         u.phone_number as "phoneNumber",
         u.avatar,
