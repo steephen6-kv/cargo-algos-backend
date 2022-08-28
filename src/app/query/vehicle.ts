@@ -9,6 +9,7 @@ export const getVehicleTypes = (limit: number, offset: number): RawQueryAndParam
         public.vehicle v
       where
         v.is_deleted = false
+        and v.type is not null;
       limit $1
       offset $2;
     `;
